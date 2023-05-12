@@ -1,0 +1,48 @@
+
+body {
+    background-color: aquamarine;
+
+}
+
+.cal_body {
+    background-color: aliceblue;
+    text-align: center;
+    margin-left: 10%;
+    margin-right: 10%;
+
+}
+
+.row1 {
+    background-color: blueviolet;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    max-width: max-content
+
+}
+
+.row2 {
+    background-color: blueviolet;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.row3 {
+    background-color: blueviolet;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.row4 {
+    background-color: blueviolet;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
