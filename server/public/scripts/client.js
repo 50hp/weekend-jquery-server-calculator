@@ -6,6 +6,7 @@ function onReady() {
     $('.operator').on('click', setOperator);
     $('#clearBtn').on('click', clearCalc);
     $('.number').on('click', inputNumber);
+    $('#historyList').on('click', '.historyItem', reduProblem);
     getHistory();
 }
 
@@ -29,24 +30,30 @@ function inputNumber() {
 
 
 }
-let input1 = '';
-let input2 = '';
+let inputA = '';
+let inputB = '';
 function inputUpdate(input) {
     if(operator===''){
-        input1 += input;
-        $('#input1').val(`${input1}`);
+        inputA += input;
+        $('#input1').val(`${inputA}`);
     }else{
-        input2 += input
-        $('#input2').val(`${input2}`);
+        inputB += input
+        $('#input2').val(`${inputB}`);
 }
 }
+let problemNumber = 0;
 function sendProblem(event) {
 
         event.preventDefault();
+    
 
         let input1 = $('#input1').val();
         let input2 = $('#input2').val();
- ;
+ 
+    if(input1 ==='' || operator ==='' || input2 ===''){
+        alert('Not all imputs filled out');
+        return;
+    }
         
     $.ajax({
         method: "POST",
@@ -56,16 +63,19 @@ function sendProblem(event) {
             operator: operator,
             input2: input2,
             solution:  '',
+            problemNumber: problemNumber,
         }
     }).then(function(response){
         console.log('success');
         getSolution();
         operator = '';
         renderOperatorToDOM();
-        input1 = '';
-        input2 = '';
+        inputA ='';
+        inputB ='';
+        inputUpdate('');
         $('#input1').val('');
         $('#input2').val('');
+        problemNumber ++;
     }).catch(function(err){
         alert('error with request');
         console.log('error with request', err);
@@ -112,16 +122,31 @@ function renderHistoryToDOM(history) {
     for (let his of history){
 
         $('#historyList').append(`
-             <li>${his.input1} ${his.operator} ${his.input2} = ${his.solution}</li>
+            <li class="historyItem" data-value="${his.problemNumber}">${his.input1} ${his.operator} ${his.input2}</li>
         `);
     }
 }
 
+function reduProblem() {
+        
+       let problem = $(this).data().value;
+        console.log(problem);
+    $.ajax({
+        method: "GET",
+        url: '/calculation'
+    }).then(function(response) {
+        console.log(response[problem]);
+    }).catch(function(err) {
+        alert('error with request');
+        console.log('error with request', err);
+    })
+}
 function clearCalc(event) {
     let index = 0;
+    problemNumber = 0;
     operator = '';
-    input1 = '';
-    input2 = '';
+    inputA = '';
+    inputB = '';
     renderOperatorToDOM();
     event.preventDefault();
 
