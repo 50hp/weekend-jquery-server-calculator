@@ -31,7 +31,8 @@ app.get('/calculation', function (req, res) {
 app.post('/calculation', function (req, res) {
     console.log('Calculation POST',req.body)
     let inputs = req.body;
-    solution = calculate((inputs.input1/1), inputs.operator, (inputs.input2/1));
+    inputs.solution = calculate((inputs.input1/1), inputs.operator, (inputs.input2/1));
+    solution = inputs.solution; 
     history.push(req.body);
     res.sendStatus(200);
 });

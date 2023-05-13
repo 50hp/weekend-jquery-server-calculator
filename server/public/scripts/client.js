@@ -30,11 +30,13 @@ function sendProblem(event){
         data:{
             input1: input1,
             operator: operator,
-            input2: input2
+            input2: input2,
+            solution:  '',
         }
     }).then(function(response){
         console.log('success');
         getSolution();
+       // getHistory()
     }).catch(function(err){
         alert('error with request');
         console.log('error with request', err);
@@ -78,10 +80,11 @@ function renderHistoryToDOM(history) {
 
     $('#historyList').empty()
 
+
     for (his of history){
 
         $('#historyList').append(`
-             <li>${his.input1} ${his.operator} ${his.input2}</li>
+             <li>${his.input1} ${his.operator} ${his.input2} = ${his.solution}</li>
         `);
     }
 }
