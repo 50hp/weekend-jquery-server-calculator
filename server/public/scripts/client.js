@@ -10,7 +10,7 @@ function onReady() {
     getHistory();
 }
 
-let operator = ' ';
+let operator = '';
 function setOperator(event) {
     event.preventDefault();
     operator = $(this).data().value;
@@ -60,7 +60,7 @@ function sendProblem(event) {
         renderOperatorToDOM();
         return;
     }
-     
+
 
     $.ajax({
         method: "POST",
@@ -72,10 +72,10 @@ function sendProblem(event) {
             solution:  '',
             problemNumber: problemNumber,
         }
-     }).then(function(response) {
+    }).then(function(response) {
         console.log('success');
         getSolution();
-        operator = ' ';
+        operator = '';
         renderOperatorToDOM();
         inputA ='';
         inputB ='';
@@ -129,7 +129,7 @@ function renderHistoryToDOM(history) {
     for (let his of history){
 
         $('#historyList').append(`
-            <li class="historyItem" data-value="${his.problemNumber}">${his.input1} ${his.operator} ${his.input2}</li>
+            <li class="historyItem" data-value="${his.problemNumber}">${his.input1} ${his.operator} ${his.input2} = ${his.solution}</li>
             `);
     }
 }
@@ -150,21 +150,21 @@ function reduProblem() {
     })
 }
 function inputUpdateAuto(inputs) {
-        operator = inputs.operator;
-        renderOperatorToDOM();
-        inputAuto1 = inputs.input1;
-        $('#input1').val(`${inputAuto1}`);
-        inputAuto2 = inputs.input2
-        $('#input2').val(`${inputAuto2}`);
-        
-        inputAuto1 ='';
-        inputAuto2 ='';
-    
+    operator = inputs.operator;
+    renderOperatorToDOM();
+    inputAuto1 = inputs.input1;
+    $('#input1').val(`${inputAuto1}`);
+    inputAuto2 = inputs.input2
+    $('#input2').val(`${inputAuto2}`);
+
+    inputAuto1 ='';
+    inputAuto2 ='';
+
 }
 function clearCalc(event) {
     let index = 0;
     problemNumber = 0;
-    operator = ' ';
+    operator = '';
     inputA = '';
     inputB = '';
     renderOperatorToDOM();
