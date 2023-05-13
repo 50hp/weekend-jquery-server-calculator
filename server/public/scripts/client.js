@@ -10,9 +10,7 @@ function onReady() {
     getHistory();
 }
 
-let operator = '';
-
-
+let operator = ' ';
 function setOperator(event) {
     event.preventDefault();
     operator = $(this).data().value;
@@ -54,6 +52,15 @@ function sendProblem(event) {
         alert('Not all imputs filled out');
         return;
     }
+    if (isNaN(input1) || isNaN(input2)) {
+        alert('Numbers Only');
+        $('#input1').val('');
+        $('#input2').val('');
+        operator = '';
+        renderOperatorToDOM();
+        return;
+    }
+     
 
     $.ajax({
         method: "POST",
@@ -65,10 +72,10 @@ function sendProblem(event) {
             solution:  '',
             problemNumber: problemNumber,
         }
-    }).then(function(response){
+     }).then(function(response) {
         console.log('success');
         getSolution();
-        operator = '';
+        operator = ' ';
         renderOperatorToDOM();
         inputA ='';
         inputB ='';
@@ -157,7 +164,7 @@ function inputUpdateAuto(inputs) {
 function clearCalc(event) {
     let index = 0;
     problemNumber = 0;
-    operator = '';
+    operator = ' ';
     inputA = '';
     inputB = '';
     renderOperatorToDOM();
