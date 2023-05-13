@@ -12,11 +12,14 @@
 </head>
 <body>
     <h1>Calculator</h1>
-    <div id="inputContainer">
+   <!-- <div id="inputContainer">
         <form id="inputForm">
             <input type="number" id="input1">
             <button class="operator" data-value="+">+</button>
-            <button class="operator" data-value="-">-</button>
+            <;
+;
+  utton class="operator" data-value="-">-</button>
+ button class="operator" data-value="-">-</button>
             <button class="operator" data-value="*">*</button>
             <button class="operator" data-value="/">/</button>
             <input type="number" id="input2"> 
@@ -24,38 +27,43 @@
             <button id="clearBtn">C</button>
         </form>
     </div>
-
+    -->
     </ul>
-    <div id="cal_body">Calculator Body
-        <div>Text Box</div>
-       <div class="row1">
-            <button class="operator" data-value="+">+</button>
-            <button class="operator" data-value="-">-</button>
-            <button class="operator" data-value="*">*</button>
-            <button class="operator" data-value="/">/</button>
-       </div>
-       <div class="row2">
-            <button id="7">7</button>
-            <button id="8">8</button>
-            <button id="9">9</button> 
-            <button id="^">^</button> 
-        </div>
-        <div class="row3">
-            <button id="4">4</button>
-            <button id="5">5</button>
-            <button id="6">6</button> 
-            <button id="ph2">ph2</button> 
-        </div>
-        <div class="row4">
-            <button id="1">1</button>
-            <button id="2">2</button>
-            <button id="3">3</button> 
-            <button id="=">=</button>
-        </div>
-    
-    
-     </div>
-    
+    <div id="inputContainer">
+        <form id="inputForm">
+
+            <input type="text" id="input1">
+            <div id="operatorDisplay"></div>
+            <input type="text" id="input2">
+            <button id="clearBtn">C</button>
+
+            <div class="row1">
+                <button type="button" class="number" data-value="7">7</button>
+                <button type="button" class="number" data-value="8">8</button>
+                <button type="button" class="number" data-value="9">9</button> 
+                <button class="operator" data-value="+">+</button>
+            </div>
+            <div class="row2">
+                <button type="button" class="number" data-value="4">4</button>
+                <button type="button" class="number" data-value="5">5</button>
+                <button type="button" class="number" data-value="6">6</button> 
+                <button type="button" class="operator" data-value="-">-</button>
+            </div>
+            <div class="row3">
+                <button type="button" class="number" data-value="1">1</button>
+                <button type="button" class="number" data-value="2">2</button>
+                <button type="button" class="number" data-value="3">3</button> 
+                <button class="operator" data-value="*">*</button>
+            </div>
+            <div class="row4">
+                <button type="button" class="number" data-value="0">0</button>
+                <button type="button" class="number" data-value=".">.</button>
+                <button id="equalBtn" type="submit">=</button>
+                <button class="operator" data-value="/">/</button>
+            </div>
+        </form>
+    </div>
+
     
     <h2 id="solution"></h2>
     <ul id="historyList">

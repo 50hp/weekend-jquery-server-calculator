@@ -5,24 +5,48 @@ function onReady() {
     $('#inputForm').on('submit', sendProblem);
     $('.operator').on('click', setOperator);
     $('#clearBtn').on('click', clearCalc);
+    $('.number').on('click', inputNumber);
     getHistory();
 }
 
-let operator;
+let operator = '';
 
 
 function setOperator(event) {
         event.preventDefault();
         operator = $(this).data().value;
+        renderOperatorToDOM();
         console.log(operator);
 }
+function renderOperatorToDOM() {
+    $('#operatorDisplay').empty(); 
+    $('#operatorDisplay').text(`${operator}`);
 
-function sendProblem(event){
+}
+function inputNumber() {
+    console.log($(this).data().value);
+    inputUpdate(`${$(this).data().value}`);
+
+
+}
+let input1 = '';
+let input2 = '';
+function inputUpdate(input) {
+    if(operator===''){
+        input1 += input;
+        $('#input1').val(`${input1}`);
+    }else{
+        input2 += input
+        $('#input2').val(`${input2}`);
+}
+}
+function sendProblem(event) {
 
         event.preventDefault();
 
         let input1 = $('#input1').val();
         let input2 = $('#input2').val();
+ ;
         
     $.ajax({
         method: "POST",
@@ -36,7 +60,12 @@ function sendProblem(event){
     }).then(function(response){
         console.log('success');
         getSolution();
-       // getHistory()
+        operator = '';
+        renderOperatorToDOM();
+        input1 = '';
+        input2 = '';
+        $('#input1').val('');
+        $('#input2').val('');
     }).catch(function(err){
         alert('error with request');
         console.log('error with request', err);
@@ -80,8 +109,7 @@ function renderHistoryToDOM(history) {
 
     $('#historyList').empty()
 
-
-    for (his of history){
+    for (let his of history){
 
         $('#historyList').append(`
              <li>${his.input1} ${his.operator} ${his.input2} = ${his.solution}</li>
@@ -91,6 +119,10 @@ function renderHistoryToDOM(history) {
 
 function clearCalc(event) {
     let index = 0;
+    operator = '';
+    input1 = '';
+    input2 = '';
+    renderOperatorToDOM();
     event.preventDefault();
 
      $('#input1').val('');
