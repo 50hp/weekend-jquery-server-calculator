@@ -1,5 +1,6 @@
 $(onReady);
 
+//function to call event listeners and functions that need to be on page load.
 function onReady() {
 
     $('#inputForm').on('submit', sendProblem);
@@ -10,6 +11,7 @@ function onReady() {
     getHistory();
 }
 
+//declare a global operator variable to be updated when a operator is pressed on the DOM.
 let operator = '';
 function setOperator(event) {
     event.preventDefault();
@@ -17,19 +19,24 @@ function setOperator(event) {
     renderOperatorToDOM();
     console.log(operator);
 }
+//function to display the operator to the DOM when selected.
 function renderOperatorToDOM() {
     $('#operatorDisplay').empty(); 
     $('#operatorDisplay').text(`${operator}`);
 
 }
+//function to capture what number is clicked on the DOM.
 function inputNumber() {
     console.log($(this).data().value);
     inputUpdateMan(`${$(this).data().value}`);
 
 
 }
+//declares 2 variables to hold the value of the buttons clicked on the DOM for each problem input.
 let inputA = '';
 let inputB = '';
+//function to update the inputs on the DOM when the buttons are selected. 
+//this function is used for new problems not in history.
 function inputUpdateMan(input) {
     if(operator===''){
         inputA += input;
@@ -39,7 +46,9 @@ function inputUpdateMan(input) {
         $('#input2').val(`${inputB}`);
     }
 }
+//declares a variable to count how many problems have been submitted to the sever.
 let problemNumber = 0;
+//function to capture the input values, operator, and problem number and puts them in a object to be sent to the server for processing.
 function sendProblem(event) {
 
     event.preventDefault();
@@ -61,17 +70,18 @@ function sendProblem(event) {
         return;
     }
 
+    let object ={
+        input1: input1,
+        operator: operator,
+        input2: input2,
+        solution:  '',
+        problemNumber: problemNumber,
+    } 
 
     $.ajax({
         method: "POST",
         url: "/calculation",
-        data:{
-            input1: input1,
-            operator: operator,
-            input2: input2,
-            solution:  '',
-            problemNumber: problemNumber,
-        }
+        data: object,
     }).then(function(response) {
         console.log('success');
         getSolution();
@@ -89,6 +99,7 @@ function sendProblem(event) {
     })
 }
 
+//function to call the sever and receive the solution variable.
 function getSolution(){
 
     $.ajax({
@@ -103,12 +114,13 @@ function getSolution(){
         console.log('error with request', err);
     })
 }
-
+//function to display the solution variable to the DOM.
 function renderSolutionToDOM(solution){
 
     $('#solution').text(`${solution}`);
 }
 
+//function to call the sever and receive the history array.
 function getHistory() {
 
     $.ajax({
@@ -122,6 +134,7 @@ function getHistory() {
     })
 }
 
+//function to loop through the history array and render it on the DOM.
 function renderHistoryToDOM(history) {
 
     $('#historyList').empty()
@@ -134,6 +147,8 @@ function renderHistoryToDOM(history) {
     }
 }
 
+//function the pull a problem from the history array and render the inputs to the DOM to be sent to the server.
+//allows the user to redo problems.
 function reduProblem() {
 
     let problem = $(this).data().value;
@@ -149,6 +164,8 @@ function reduProblem() {
         console.log('error with request', err);
     })
 }
+
+//function that automatically puts inputs from the history on the DOM
 function inputUpdateAuto(inputs) {
     operator = inputs.operator;
     renderOperatorToDOM();
@@ -161,6 +178,9 @@ function inputUpdateAuto(inputs) {
     inputAuto2 ='';
 
 }
+
+//function to clear all variables and arrays back to default.
+//sends a delete request to the sever to reset the history array.
 function clearCalc(event) {
     let index = 0;
     problemNumber = 0;
